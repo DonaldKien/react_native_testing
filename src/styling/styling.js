@@ -59,7 +59,7 @@ export const ButtonClick = styled.TouchableOpacity`
     height: 50px;
     border-radius: 50px;
     justify-content: center;
-`
+`;
 
 export const ButtonClick2 = styled.TouchableOpacity`
     background-color: ${props => props.inputColor || "white"};
@@ -67,13 +67,13 @@ export const ButtonClick2 = styled.TouchableOpacity`
     height: 50px;
     border-radius: 15px;
     justify-content: center;
-`
+`;
 
 export const ButtonText = styled.Text`
     text-align: center;
     font-size: 20px;
     font-weight: 600;
-`
+`;
 
 export const InputImage = styled.View`
     height: 150px;
@@ -83,4 +83,4 @@ export const InputImage = styled.View`
     border-style: solid;
     border-radius: 10px;
     border-color: white;
-`
+`;

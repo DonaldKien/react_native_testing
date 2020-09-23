@@ -10,9 +10,9 @@ const App = () => {
 
 	return (
 		// <Provider store={store}>
-		// 	<Landing />
+			<Landing />
 		// </Provider>
-		<Onboard />
+		// <Onboard />
 	);
 };
 

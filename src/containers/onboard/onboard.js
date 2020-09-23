@@ -1,14 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { Content } from 'native-base';
 import styled from 'styled-components';
-import { BackgroundColor, Title, Subtitle, InputImage, Logo, TextInputBox, TextInputBoxLarge, TextInputLabel, InputText, Link, ButtonClick, ButtonClick2, ButtonText } from '../../styling/styling';
-import Arrow from 'react-native-arrow'
+import { BackgroundColor, Title, Subtitle, InputImage, TextInputBox, TextInputBoxLarge, TextInputLabel, InputText, ButtonClick2, ButtonText } from '../../styling/styling';
 
 const onboard = () => {
     
     return (
         <BackgroundColor>
-
+            <Content>
             <TitleBarWrapper>
                 <Title>Welcome Onboard</Title>
                 <Subtitle>You are almost there</Subtitle>
@@ -21,22 +20,24 @@ const onboard = () => {
 
             <TextInputBoxWrapper>
                 <TextInputBox>
-                <TextInputLabel>Display name / Company name</TextInputLabel>
-                    <InputText />
+                    <TextInputLabel>Display name / Company name</TextInputLabel>
+                        <InputText />
                 </TextInputBox>
-
-                <TextInputBoxLarge>
-                <TextInputLabel>Company Description</TextInputLabel>
-                    <InputText multiline={true} numberOfLines={2}/>
-                </TextInputBoxLarge>
             </TextInputBoxWrapper>
+
+            <TextInputBoxWrapperLarge>
+                <TextInputBoxLarge>
+                    <TextInputLabel>Company Description</TextInputLabel>
+                        <InputText multiline={true} numberOfLines={2}/>
+                </TextInputBoxLarge>
+            </TextInputBoxWrapperLarge>
 
             <ButtonWrapper>
                 <ButtonClick2>
                     <ButtonText>Continue</ButtonText>
                 </ButtonClick2>
             </ButtonWrapper>
-
+            </Content>
         </BackgroundColor>
     )
 }
@@ -48,14 +49,21 @@ const TitleBarWrapper = styled.View`
 `
 
 const ChannelImageWrapper = styled.View`
+    margin-top: 15px;   
     flex: 3;
     justify-content: center;
     align-items: center;
 `
 const TextInputBoxWrapper = styled.View`
-    flex: 3;
-    margin: 10px auto auto auto;
-    justify-content: space-between;
+    margin-top: 15px;   
+    flex: 1;
+    align-items: center;
+`
+
+const TextInputBoxWrapperLarge = styled.View`
+    margin-top: 15px;   
+    flex: 2;
+    align-items: center;
 `
 
 const ButtonWrapper = styled.View`
