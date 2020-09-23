@@ -23,7 +23,7 @@ const register = () => {
             </TitleWrapper>
 
             {labels.map( label => ( 
-            <TextInputBoxWrapper>
+            <TextInputBoxWrapper key={label.key}>
                 <TextInputBox>
                 <TextInputLabel>{label.inputLabel}</TextInputLabel>
                     <InputText />

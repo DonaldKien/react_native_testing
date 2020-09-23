@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../../assets/image/logo1.jpg';
 import styled from 'styled-components';
 import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
-
+import { connect } from 'react-redux';
 
 
 const landing = () => {
 
-    const testing = () => {console.log('pressed');}
+    const testing = () => {console.log('testing')}
 
     return (
         <>
             <BackgroundColor>
 
                 <TitleWrapper>
-                    <Title inputColor='white'>Welcome</Title>
+                    <Title inputColor='white'>Welcome!</Title>
                 </TitleWrapper>
                 
                 <LogoWrapper>
@@ -47,7 +47,7 @@ const landing = () => {
 
                 <ButtonWrapper>
                     <ButtonClick>
-                        <ButtonText>Register</ButtonText>
+                        <ButtonText onPress={testing}>Register</ButtonText>
                     </ButtonClick>
                 </ButtonWrapper>
 
@@ -75,5 +75,17 @@ const LinkWrapper = styled.View`
     margin: 5px auto;
 
 `
+
+// function mapStateToProps (state) {
+//     return { pressLink: state.linkPressed }
+// }
+
+// function mapDispatchToProps (dispatch) {
+//     return {
+//         pressedLink: () => dispatch({type: 'LINKPRESSED'})
+//     }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps) (landing);
 
 export default landing;
