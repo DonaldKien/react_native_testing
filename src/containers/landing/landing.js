@@ -7,20 +7,30 @@ import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, 
 
 const landing = () => {
 
+    // Email
+    const [email, setEmail] = useState('');
+    const [checkEmail, setCheckEmail] = useState(false);
+    const [boxFocusEmail, setBoxFocusEmail] = useState(false);
+
+    const focusBoxEmail = () => {
+        setBoxFocusEmail(true);
+    }
+    
+    // Password
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState(false);
-    const [boxFocus, setBoxFocus] = useState(false);
+    const [boxFocusPassword, setBoxFocusPassword] = useState(false);
 
-    const testing = () => {console.log(password)};
+    const focusBoxPassword = () => {
+        setBoxFocusPassword(true);
+    }
 
     const blurBox = () => {
+        email.length ? setCheckEmail(true) : setCheckEmail(false);
         password.length < 6 ? setCheckPassword(false) : setCheckPassword(true);
-        setBoxFocus(false);
+        setBoxFocusEmail(false);
+        setBoxFocusPassword(false);
     };
-
-    const focusBox = () => {
-        setBoxFocus(true);
-    }
 
     return (
         <>
@@ -36,29 +46,34 @@ const landing = () => {
                     </LogoWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBox>
-                            <TextInputLabel>Email</TextInputLabel>
-                            <InputText />
-                        </TextInputBox>
+                        <TextInputBoxEmail boxFocusEmail={boxFocusEmail}>
+                            <TextInputLabelEmail checkEmail={checkEmail}>Email</TextInputLabelEmail>
+                            <InputTextEmail 
+                                onFocus={focusBoxEmail} 
+                                onBlur={blurBox} 
+                                onChangeText={text => setEmail(text)} 
+                                value={email}
+                            />
+                        </TextInputBoxEmail>
                     </TextInputBoxWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxState boxFocus={boxFocus}>
-                        <TextInputLabelState boxFocus={boxFocus} checkPassword={checkPassword}>
+                        <TextInputBoxPassword boxFocusPassword={boxFocusPassword}>
+                        <TextInputLabelPassword checkPassword={checkPassword}>
                             Password {!checkPassword ? '- 6 letters required' : null }
-                        </TextInputLabelState>
-                            <InputTextState 
-                                onFocus={focusBox}
+                        </TextInputLabelPassword>
+                            <InputTextPassword 
+                                onFocus={focusBoxPassword}
                                 onBlur={blurBox} 
                                 onChangeText={text => setPassword(text)} 
                                 value={password} 
                                 secureTextEntry={true}
                             />
-                        </TextInputBoxState>
+                        </TextInputBoxPassword>
                     </TextInputBoxWrapper>
 
                     <LinkWrapper>
-                        <Link onPress={testing}>Forgot Password</Link>
+                        <Link onPress={() => {console.log("forgot password")}}>Forgot Password</Link>
                     </LinkWrapper>
 
                     <ButtonWrapper>
@@ -69,7 +84,7 @@ const landing = () => {
 
                     <ButtonWrapper>
                         <ButtonClick>
-                            <ButtonText onPress={testing}>Register</ButtonText>
+                            <ButtonText onPress={() => {console.log("register")}}>Register</ButtonText>
                         </ButtonClick>
                     </ButtonWrapper>
                 </Content>
@@ -81,17 +96,38 @@ const landing = () => {
 
 // test with local state -----------------------
 
-const TextInputLabelState = styled.Text`
-    color: ${(props) => !props.checkPassword ? "red" : "white"};
-`;
+// Email
 
-const InputTextState = styled.TextInput`
+const InputTextEmail = styled.TextInput`
     color: white;
     font-size: 22px;
 `;
 
-const TextInputBoxState = styled.View`
-    border: 1px solid ${(props) => props.boxFocus ? "#abfbff" : "white"};
+const TextInputLabelEmail = styled.Text`
+    color: ${(props) => props.checkEmail ? "white" : "red"};
+`;
+
+const TextInputBoxEmail = styled.View`
+    border: 1px solid ${(props => props.boxFocusEmail ?  "#abfbff" : "white")};
+    height: 70px;
+    width: 300px;
+    border-radius: 10px;
+    padding: 5px 10px;
+`;
+
+//Password
+
+const InputTextPassword = styled.TextInput`
+    color: white;
+    font-size: 22px;
+`;
+
+const TextInputLabelPassword = styled.Text`
+    color: ${(props) => props.checkPassword ? "white" : "red"};
+`;
+
+const TextInputBoxPassword = styled.View`
+    border: 1px solid ${(props) => props.boxFocusPassword ? "#abfbff" : "white"};
     height: 70px;
     width: 300px;
     border-radius: 10px;
