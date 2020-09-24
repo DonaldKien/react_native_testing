@@ -7,26 +7,33 @@ import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, 
 
 const landing = () => {
 
-    // Email
-    // const [form, setForm] = useState({
-    //     email: { emailInput: "email", checkEmail: false, boxFocusEmail: false },
-    //     password: { passwordInput: "jiji", checkPassword: false, boxFocusPassword: false }
-    // })
+    const [form, setForm] = useState({
+        email: { emailInput: "", checkEmail: false, boxFocusEmail: false },
+        password: { passwordInput: "", checkPassword: false, boxFocusPassword: false }
+    })
 
-    const [form, setForm] = useState(
-        {emailInput: "", passwordInput: ""}
-    )
-
-    const onChange = event => {
-        const { name, value } = event.target;
-
-        setForm(prevValue => {
-            return {
-                ...prevValue,
-                [name]: value
-            }
-        })
-        console.log(form.emailInput.value)
+    const onChangeText = (name, value) => {
+        if (name === 'email') {
+            setForm({
+                ...form,
+                [name]: {
+                    ...form[name],
+                    emailInput: value
+                }
+            })
+        } 
+        else if (name === 'password') {
+            setForm({
+                ...form,
+                [name]: {
+                    ...form[name],
+                    passwordInput: value
+                }
+            })
+        }
+        else {
+            console.log("onChangeText Function Error!")
+        }
     }
 
     return (
@@ -46,9 +53,8 @@ const landing = () => {
                         <TextInputBoxEmail>
                             <TextInputLabelEmail>Email</TextInputLabelEmail>
                             <InputTextEmail 
-                                name="emailInput"
-                                onChange={onChange}
-                                value={form.emailInput.value}
+                                onChangeText={(text) => onChangeText('email', text)}
+                                value={form.email.emailInput}
                             />
                         </TextInputBoxEmail>
                     </TextInputBoxWrapper>
@@ -59,16 +65,15 @@ const landing = () => {
                             Password
                         </TextInputLabelPassword>
                             <InputTextPassword 
-                                name="passwordInput" 
                                 secureTextEntry={true}
-                                onChange={onChange}
-                                value={form.passwordInput.value}
+                                onChangeText={(text) => onChangeText('password', text)}
+                                value={form.password.passwordInput}
                             />
                         </TextInputBoxPassword>
                     </TextInputBoxWrapper>
 
                     <LinkWrapper>
-                        <Link onPress={() => {console.log("forgot password")}}>Forgot Password</Link>
+                        <Link onPress={() => {console.log(form.password.passwordInput)}}>Forgot Password</Link>
                     </LinkWrapper>
 
                     <ButtonWrapper>
@@ -79,7 +84,7 @@ const landing = () => {
 
                     <ButtonWrapper>
                         <ButtonClick>
-                            <ButtonText onPress={() => {console.log("register")}}>Register</ButtonText>
+                            <ButtonText onPress={() => {console.log(form.email.emailInput)}}>Register</ButtonText>
                         </ButtonClick>
                     </ButtonWrapper>
                 </Content>
