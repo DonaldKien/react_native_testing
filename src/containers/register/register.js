@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
 
-const register = () => {
+const register = ({ navigation }) => {
 
     const termsAndConditions = () => {console.log('terms and conditions')}
+
+    const [form, setForm] = useState([
+        {email: ""},
+        {PIC_name: ""},
+        {mobile: ""},
+        {password: ""},
+        {confirm_password: ""}
+    ])
 
     const labels = [
         {key:1, inputLabel: 'Email'},
@@ -36,7 +44,7 @@ const register = () => {
             </LinkWrapper>
 
             <ButtonWrapper>
-                <ButtonClick inputColor='yellow'>
+                <ButtonClick onPress={() => navigation.navigate('Onboard')} inputColor='yellow'>
                     <ButtonText>Register</ButtonText>
                 </ButtonClick>
             </ButtonWrapper>

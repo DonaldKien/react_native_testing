@@ -1,19 +1,24 @@
-import React from 'react';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Splash from './src/containers/splash/splash';
 import Landing from './src/containers/landing/landing';
 import Register from './src/containers/register/register';
-import store from './src/redux/store/store'
-import {Provider} from 'react-redux';
-import Onboard from './src/containers/onboard/onboard'
+import Onboard from './src/containers/onboard/onboard';
 
-const App = () => {
+const Stack = createStackNavigator();
 
-	return (
-		// <Provider store={store}>
-			<Landing />
-		// </Provider>
-		// <Onboard />
-	);
-};
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="SPLASH" component={Splash} />
+        <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Onboard" component={Onboard} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 export default App;

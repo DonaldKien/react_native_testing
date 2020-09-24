@@ -1,39 +1,49 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import logo from '../../assets/image/logo1.jpg';
 import styled from 'styled-components';
 import { Content } from 'native-base';
 import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
 
 
-const landing = () => {
+const landing = ({navigation}) => {
 
     const [form, setForm] = useState({
-        email: { emailInput: "", checkEmail: false, boxFocusEmail: false },
-        password: { passwordInput: "", checkPassword: false, boxFocusPassword: false }
+        email: { value: "", onFocus: false, onBlur: false, error: false },
+        password: { value: "", onFocus: false, onBlur: false, error: false }
     })
 
     const onChangeText = (name, value) => {
-        if (name === 'email') {
-            setForm({
-                ...form,
-                [name]: {
-                    ...form[name],
-                    emailInput: value
-                }
-            })
-        } 
-        else if (name === 'password') {
-            setForm({
-                ...form,
-                [name]: {
-                    ...form[name],
-                    passwordInput: value
-                }
-            })
-        }
-        else {
-            console.log("onChangeText Function Error!")
-        }
+        setForm({
+            ...form,
+            [name]: {
+                ...form[name],
+                value: value
+            }
+        })
+    }
+
+    const boxFocus = (name, value) => {
+        setForm({
+            ...form,
+            [name]: {
+                ...form[name],
+                onFocus: value,
+                onBlur: !value
+            }
+        })
+    }
+
+    const checkEmailPassword = () => {
+        setForm({
+            'email': {
+                ...form['email'],
+                error: form.email.onBlur && !form.email.value ? true : false
+            },
+            'password': {
+                ...form['password'],
+                error: form.password.onBlur && form.password.value.length < 6 ? true : false
+            }
+        })
     }
 
     return (
@@ -50,41 +60,47 @@ const landing = () => {
                     </LogoWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxEmail>
-                            <TextInputLabelEmail>Email</TextInputLabelEmail>
+                        <TextInputBoxEmail boxFocus={form.email.onFocus}>
+                            <TextInputLabelEmail checkEmailError={form.email.error}>Email</TextInputLabelEmail>
                             <InputTextEmail 
+                                onBlur={() => boxFocus('email', false)}
+                                onFocus={() => boxFocus('email', true)}
                                 onChangeText={(text) => onChangeText('email', text)}
                                 value={form.email.emailInput}
+                                keyboardType="email-address"
+                                textContentType="emailAddress"
                             />
                         </TextInputBoxEmail>
                     </TextInputBoxWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxPassword>
-                        <TextInputLabelPassword>
-                            Password
+                        <TextInputBoxPassword boxFocus={form.password.onFocus}>
+                        <TextInputLabelPassword checkPasswordError={form.password.error}>
+                            Password {form.password.error ? "- 6 letters required" : null}
                         </TextInputLabelPassword>
                             <InputTextPassword 
-                                secureTextEntry={true}
+                                onBlur={() => boxFocus('password', false)}
+                                onFocus={() => boxFocus('password', true)}
                                 onChangeText={(text) => onChangeText('password', text)}
                                 value={form.password.passwordInput}
+                                secureTextEntry={true}
                             />
                         </TextInputBoxPassword>
                     </TextInputBoxWrapper>
 
                     <LinkWrapper>
-                        <Link onPress={() => {console.log(form.password.passwordInput)}}>Forgot Password</Link>
+                        <Link>Forgot Password</Link>
                     </LinkWrapper>
 
                     <ButtonWrapper>
                         <ButtonClick inputColor='yellow'>
-                            <ButtonText>Sign In</ButtonText>
+                            <ButtonText onPress={checkEmailPassword}>Sign In</ButtonText>
                         </ButtonClick>
                     </ButtonWrapper>
 
                     <ButtonWrapper>
                         <ButtonClick>
-                            <ButtonText onPress={() => {console.log(form.email.emailInput)}}>Register</ButtonText>
+                            <ButtonText onPress={() => navigation.navigate('Register')}>Register</ButtonText>
                         </ButtonClick>
                     </ButtonWrapper>
                 </Content>
@@ -104,11 +120,11 @@ const InputTextEmail = styled.TextInput`
 `;
 
 const TextInputLabelEmail = styled.Text`
-    color: white;
+    color: ${props => props.checkEmailError ? "red" : "white"};
 `;
 
 const TextInputBoxEmail = styled.View`
-    border: 1px solid white;
+    border: 1px solid ${props => props.boxFocus ? "blue" : "white" };
     height: 70px;
     width: 300px;
     border-radius: 10px;
@@ -123,11 +139,11 @@ const InputTextPassword = styled.TextInput`
 `;
 
 const TextInputLabelPassword = styled.Text`
-    color: white;
+    color: ${props => props.checkPasswordError ? "red" : "white"};
 `;
 
 const TextInputBoxPassword = styled.View`
-    border: 1px solid white;
+    border: 1px solid ${props => props.boxFocus ? "blue" : "white" };
     height: 70px;
     width: 300px;
     border-radius: 10px;
@@ -153,7 +169,6 @@ const ButtonWrapper = styled.View`
 
 const LinkWrapper = styled.View`
     margin: 5px auto;
-
 `
 
 // function mapStateToProps (state) {
