@@ -8,29 +8,26 @@ import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, 
 const landing = () => {
 
     // Email
-    const [email, setEmail] = useState('');
-    const [checkEmail, setCheckEmail] = useState(false);
-    const [boxFocusEmail, setBoxFocusEmail] = useState(false);
+    // const [form, setForm] = useState({
+    //     email: { emailInput: "email", checkEmail: false, boxFocusEmail: false },
+    //     password: { passwordInput: "jiji", checkPassword: false, boxFocusPassword: false }
+    // })
 
-    const focusBoxEmail = () => {
-        setBoxFocusEmail(true);
+    const [form, setForm] = useState(
+        {emailInput: "", passwordInput: ""}
+    )
+
+    const onChange = event => {
+        const { name, value } = event.target;
+
+        setForm(prevValue => {
+            return {
+                ...prevValue,
+                [name]: value
+            }
+        })
+        console.log(form.emailInput.value)
     }
-    
-    // Password
-    const [password, setPassword] = useState('');
-    const [checkPassword, setCheckPassword] = useState(false);
-    const [boxFocusPassword, setBoxFocusPassword] = useState(false);
-
-    const focusBoxPassword = () => {
-        setBoxFocusPassword(true);
-    }
-
-    const blurBox = () => {
-        email.length ? setCheckEmail(true) : setCheckEmail(false);
-        password.length < 6 ? setCheckPassword(false) : setCheckPassword(true);
-        setBoxFocusEmail(false);
-        setBoxFocusPassword(false);
-    };
 
     return (
         <>
@@ -46,28 +43,26 @@ const landing = () => {
                     </LogoWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxEmail boxFocusEmail={boxFocusEmail}>
-                            <TextInputLabelEmail checkEmail={checkEmail}>Email</TextInputLabelEmail>
+                        <TextInputBoxEmail>
+                            <TextInputLabelEmail>Email</TextInputLabelEmail>
                             <InputTextEmail 
-                                onFocus={focusBoxEmail} 
-                                onBlur={blurBox} 
-                                onChangeText={text => setEmail(text)} 
-                                value={email}
+                                name="emailInput"
+                                onChange={onChange}
+                                value={form.emailInput.value}
                             />
                         </TextInputBoxEmail>
                     </TextInputBoxWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxPassword boxFocusPassword={boxFocusPassword}>
-                        <TextInputLabelPassword checkPassword={checkPassword}>
-                            Password {!checkPassword ? '- 6 letters required' : null }
+                        <TextInputBoxPassword>
+                        <TextInputLabelPassword>
+                            Password
                         </TextInputLabelPassword>
                             <InputTextPassword 
-                                onFocus={focusBoxPassword}
-                                onBlur={blurBox} 
-                                onChangeText={text => setPassword(text)} 
-                                value={password} 
+                                name="passwordInput" 
                                 secureTextEntry={true}
+                                onChange={onChange}
+                                value={form.passwordInput.value}
                             />
                         </TextInputBoxPassword>
                     </TextInputBoxWrapper>
@@ -104,11 +99,11 @@ const InputTextEmail = styled.TextInput`
 `;
 
 const TextInputLabelEmail = styled.Text`
-    color: ${(props) => props.checkEmail ? "white" : "red"};
+    color: white;
 `;
 
 const TextInputBoxEmail = styled.View`
-    border: 1px solid ${(props => props.boxFocusEmail ?  "#abfbff" : "white")};
+    border: 1px solid white;
     height: 70px;
     width: 300px;
     border-radius: 10px;
@@ -123,11 +118,11 @@ const InputTextPassword = styled.TextInput`
 `;
 
 const TextInputLabelPassword = styled.Text`
-    color: ${(props) => props.checkPassword ? "white" : "red"};
+    color: white;
 `;
 
 const TextInputBoxPassword = styled.View`
-    border: 1px solid ${(props) => props.boxFocusPassword ? "#abfbff" : "white"};
+    border: 1px solid white;
     height: 70px;
     width: 300px;
     border-radius: 10px;
