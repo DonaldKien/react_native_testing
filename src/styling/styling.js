@@ -23,7 +23,7 @@ export const Logo = styled.Image`
 `;
 
 export const TextInputBox = styled.View`
-    border: 1px solid white;
+    border: 1px solid ${props => props.boxFocus ? "blue" : "white" };
     height: 70px;
     width: 300px;
     border-radius: 10px;
@@ -39,7 +39,13 @@ export const TextInputBoxLarge = styled.View`
 `;
 
 export const TextInputLabel = styled.Text`
-    color: ${props => props.inputColor || "white"};
+    color: ${props => {
+        if (props.checkError) {
+            return props.checkError ? "red" : "white"
+        } else {
+            return "white"
+        }
+    }}
 `;
 
 export const InputText = styled.TextInput`
@@ -75,12 +81,20 @@ export const ButtonText = styled.Text`
     font-weight: 600;
 `;
 
-export const InputImage = styled.View`
+export const ImageTouchable = styled.TouchableOpacity`
+    border-width: 5px;
+    border-color: white;
+    border-radius: 10px;
+    background-color: white;
+`
+export const ImageInput = styled.Image`
+    width: 150;
+    height: 150;
+    border-radius: 5;
+    resize-mode: cover;
+`
+
+export const DefaultImage = styled.Image`
     height: 150px;
     width: 150px;
-    background-color: grey;
-    border-width: 10px;
-    border-style: solid;
-    border-radius: 10px;
-    border-color: white;
 `;

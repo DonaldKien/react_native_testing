@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import logo from '../../assets/image/logo1.jpg';
 import styled from 'styled-components';
 import { Content } from 'native-base';
-import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
+import { BackgroundColor, Title, Logo, TextInputLabel, TextInputBox, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
 
 
 const landing = ({navigation}) => {
@@ -33,15 +33,27 @@ const landing = ({navigation}) => {
         })
     }
 
+    const boxBlur = (name, value) => {
+        setForm({
+            ...form,
+            [name]: {
+                ...form[name],
+                onBlur: value,
+                onFocus: !value,
+                error: !form[name].value ? true : false
+            }
+        })
+    }
+
     const checkEmailPassword = () => {
         setForm({
-            'email': {
+            ['email']: {
                 ...form['email'],
-                error: form.email.onBlur && !form.email.value ? true : false
+                error: !form['email'].value ? true : false
             },
-            'password': {
+            ['password']: {
                 ...form['password'],
-                error: form.password.onBlur && form.password.value.length < 6 ? true : false
+                error: !form['password'].value ? true : false
             }
         })
     }
@@ -60,32 +72,32 @@ const landing = ({navigation}) => {
                     </LogoWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxEmail boxFocus={form.email.onFocus}>
-                            <TextInputLabelEmail checkEmailError={form.email.error}>Email</TextInputLabelEmail>
-                            <InputTextEmail 
-                                onBlur={() => boxFocus('email', false)}
+                        <TextInputBox boxFocus={form.email.onFocus}>
+                            <TextInputLabel checkError={form.email.error}>Email</TextInputLabel>
+                            <InputText 
+                                onBlur={() => boxBlur('email', true)}
                                 onFocus={() => boxFocus('email', true)}
                                 onChangeText={(text) => onChangeText('email', text)}
                                 value={form.email.emailInput}
                                 keyboardType="email-address"
                                 textContentType="emailAddress"
                             />
-                        </TextInputBoxEmail>
+                        </TextInputBox>
                     </TextInputBoxWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBoxPassword boxFocus={form.password.onFocus}>
-                        <TextInputLabelPassword checkPasswordError={form.password.error}>
-                            Password {form.password.error ? "- 6 letters required" : null}
-                        </TextInputLabelPassword>
-                            <InputTextPassword 
-                                onBlur={() => boxFocus('password', false)}
+                        <TextInputBox boxFocus={form.password.onFocus}>
+                        <TextInputLabel checkError={form.password.error}>
+                            Password 
+                        </TextInputLabel>
+                            <InputText 
+                                onBlur={() => boxBlur('password', true)}
                                 onFocus={() => boxFocus('password', true)}
                                 onChangeText={(text) => onChangeText('password', text)}
                                 value={form.password.passwordInput}
                                 secureTextEntry={true}
                             />
-                        </TextInputBoxPassword>
+                        </TextInputBox>
                     </TextInputBoxWrapper>
 
                     <LinkWrapper>
@@ -109,48 +121,6 @@ const landing = ({navigation}) => {
         </>
     )
 }
-
-// test with local state -----------------------
-
-// Email
-
-const InputTextEmail = styled.TextInput`
-    color: white;
-    font-size: 22px;
-`;
-
-const TextInputLabelEmail = styled.Text`
-    color: ${props => props.checkEmailError ? "red" : "white"};
-`;
-
-const TextInputBoxEmail = styled.View`
-    border: 1px solid ${props => props.boxFocus ? "blue" : "white" };
-    height: 70px;
-    width: 300px;
-    border-radius: 10px;
-    padding: 5px 10px;
-`;
-
-//Password
-
-const InputTextPassword = styled.TextInput`
-    color: white;
-    font-size: 22px;
-`;
-
-const TextInputLabelPassword = styled.Text`
-    color: ${props => props.checkPasswordError ? "red" : "white"};
-`;
-
-const TextInputBoxPassword = styled.View`
-    border: 1px solid ${props => props.boxFocus ? "blue" : "white" };
-    height: 70px;
-    width: 300px;
-    border-radius: 10px;
-    padding: 5px 10px;
-`;
-
-// -----------------------------------------------
 
 const TitleWrapper = styled.View`
     margin: 30px auto;

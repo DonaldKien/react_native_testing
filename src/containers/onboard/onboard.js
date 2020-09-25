@@ -1,9 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Content } from 'native-base';
 import styled from 'styled-components';
-import { BackgroundColor, Title, Subtitle, InputImage, TextInputBox, TextInputBoxLarge, TextInputLabel, InputText, ButtonClick2, ButtonText } from '../../styling/styling';
+import { Image, TouchableOpacity, View } from 'react-native';
+import { BackgroundColor, Title, Subtitle, DefaultImage, TextInputBox, ImageInput, ImageTouchable, TextInputBoxLarge, TextInputLabel, InputText, ButtonClick2, ButtonText } from '../../styling/styling';
+import ImagePicker from 'react-native-image-picker';
+import imageDefault from '../../assets/image/addImage.png'
 
 const onboard = () => {
+    
+	const [avatarSource, setAvatarSource] = useState(null)
+
+	const selectImage = async() => {
+		
+		ImagePicker.showImagePicker({noData: true, mediaType: 'photo'}, (response) => {
+			console.log('Response = ', response);
+			
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			} else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			} else if (response.customButton) {
+				console.log('User tapped custom button: ', response.customButton);
+			} else {
+				setAvatarSource(response.uri)			
+			}
+		});
+    }
     
     return (
         <BackgroundColor>
@@ -14,7 +36,13 @@ const onboard = () => {
             </TitleBarWrapper>
 
             <ChannelImageWrapper>
-                <InputImage />
+                <ImageTouchable onPress={selectImage}>
+                {
+                    avatarSource ? 
+                    <ImageInput source={{uri:avatarSource}}/> :
+                    <DefaultImage source={imageDefault}/>
+                }
+            </ImageTouchable>
                 <Subtitle>Channel Image</Subtitle>
             </ChannelImageWrapper>
 
