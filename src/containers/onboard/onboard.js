@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { BackgroundColor, Title, Subtitle, DefaultImage, TextInputBox, ImageInput, ImageTouchable, TextInputBoxLarge, TextInputLabel, InputText, ButtonClick2, ButtonText } from '../../styling/styling';
 import ImagePicker from 'react-native-image-picker';
-import imageDefault from '../../assets/image/addImage.png'
+import imageDefault from '../../assets/image/addImage.png';
+import { ButtonSmallComponent, TextInputBoxAreaComponent, TextInputBoxComponent, TitleComponent, SubtitleComponent } from '../../components/components';
 
 const onboard = () => {
     
@@ -30,41 +31,47 @@ const onboard = () => {
     return (
         <BackgroundColor>
             <Content>
-            <TitleBarWrapper>
-                <Title>Welcome Onboard</Title>
-                <Subtitle>You are almost there</Subtitle>
-            </TitleBarWrapper>
+                <TitleBarWrapper>
+                    <TitleComponent
+                        text='Welcome Onboard'
+                    />
+                    <SubtitleComponent
+                        text='You are almost there'
+                    />
+                </TitleBarWrapper>
 
-            <ChannelImageWrapper>
-                <ImageTouchable onPress={selectImage}>
-                {
-                    avatarSource ? 
-                    <ImageInput source={{uri:avatarSource}}/> :
-                    <DefaultImage source={imageDefault}/>
-                }
-            </ImageTouchable>
-                <Subtitle>Channel Image</Subtitle>
-            </ChannelImageWrapper>
+                <ChannelImageWrapper>
+                    <ImageTouchable onPress={selectImage}>
+                    {
+                        avatarSource ? 
+                        <ImageInput source={{uri:avatarSource}}/> :
+                        <DefaultImage source={imageDefault}/>
+                    }
+                </ImageTouchable>
+                    <SubtitleComponent
+                        text='Channel Image'
+                    />
+                </ChannelImageWrapper>
 
-            <TextInputBoxWrapper>
-                <TextInputBox>
-                    <TextInputLabel>Display name / Company name</TextInputLabel>
-                        <InputText />
-                </TextInputBox>
-            </TextInputBoxWrapper>
+                <TextInputBoxWrapper>
+                    <TextInputBoxComponent 
+                        text='Display name / Company name'
+                    />
+                </TextInputBoxWrapper>
 
-            <TextInputBoxWrapperLarge>
-                <TextInputBoxLarge>
-                    <TextInputLabel>Company Description</TextInputLabel>
-                        <InputText multiline={true} numberOfLines={2}/>
-                </TextInputBoxLarge>
-            </TextInputBoxWrapperLarge>
+                <TextInputBoxWrapperLarge>
+                    <TextInputBoxAreaComponent 
+                        text='Company Description'
+                        multiline={true} 
+                        numberOfLines={2}
+                    />
+                </TextInputBoxWrapperLarge>
 
-            <ButtonWrapper>
-                <ButtonClick2>
-                    <ButtonText>Continue</ButtonText>
-                </ButtonClick2>
-            </ButtonWrapper>
+                <ButtonWrapper>
+                    <ButtonSmallComponent
+                        text='Continue'
+                    />
+                </ButtonWrapper>
             </Content>
         </BackgroundColor>
     )

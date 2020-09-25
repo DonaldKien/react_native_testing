@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styled from 'styled-components';
 import { BackgroundColor, Title, Logo, TextInputBox, TextInputLabel, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
+import { ButtonComponent, LinkComponent, TitleComponent, TextInputBoxComponent } from '../../components/components';
 
 const register = ({ navigation }) => {
 
@@ -27,26 +28,33 @@ const register = ({ navigation }) => {
         <BackgroundColor>
 
             <TitleWrapper>
-                <Title>Sign Up as Seller</Title>
+                <TitleComponent 
+                    text='Sign Up as Seller'
+                />
             </TitleWrapper>
 
             {labels.map( label => ( 
             <TextInputBoxWrapper key={label.key}>
-                <TextInputBox>
-                <TextInputLabel>{label.inputLabel}</TextInputLabel>
-                    <InputText />
-                </TextInputBox>
+                <TextInputBoxComponent 
+                    text={label.inputLabel}
+                />
             </TextInputBoxWrapper>
             ))}
 
             <LinkWrapper>
-                <Link inputColor="#FFA000" onPress={termsAndConditions}>Terms and Conditions</Link>
+                <LinkComponent 
+                    text='Terms and Conditions'
+                    inputColor="#FFA000"
+                    onPress={termsAndConditions}
+                />
             </LinkWrapper>
 
             <ButtonWrapper>
-                <ButtonClick onPress={() => navigation.navigate('Onboard')} inputColor='yellow'>
-                    <ButtonText>Register</ButtonText>
-                </ButtonClick>
+                <ButtonComponent 
+                    text='Register'
+                    inputColor='yellow'
+                    onPress={() => navigation.navigate('Onboard')}
+                />
             </ButtonWrapper>
         </BackgroundColor>
     )

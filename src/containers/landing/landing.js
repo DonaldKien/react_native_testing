@@ -3,7 +3,7 @@ import logo from '../../assets/image/logo1.jpg';
 import styled from 'styled-components';
 import { Content } from 'native-base';
 import { BackgroundColor, Title, Logo, TextInputLabel, TextInputBox, InputText, Link, ButtonClick, ButtonText } from '../../styling/styling';
-
+import { TextInputBoxComponent, ButtonComponent, LinkComponent, TitleComponent } from '../../components/components';
 
 const landing = ({navigation}) => {
 
@@ -45,7 +45,7 @@ const landing = ({navigation}) => {
         })
     }
 
-    const checkEmailPassword = () => {
+    const signIn = () => {
         setForm({
             ['email']: {
                 ...form['email'],
@@ -64,56 +64,65 @@ const landing = ({navigation}) => {
 
                 <Content>
                     <TitleWrapper>
-                        <Title inputColor='white'>Welcome!</Title>
+                        <TitleComponent 
+                            text='Welcome'
+                            inputColor='white'
+                        />
                     </TitleWrapper>
                     
                     <LogoWrapper>
-                        <Logo source={logo}/>
+                        <Logo 
+                            source={logo}
+                        />
                     </LogoWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBox boxFocus={form.email.onFocus}>
-                            <TextInputLabel checkError={form.email.error}>Email</TextInputLabel>
-                            <InputText 
-                                onBlur={() => boxBlur('email', true)}
-                                onFocus={() => boxFocus('email', true)}
-                                onChangeText={(text) => onChangeText('email', text)}
-                                value={form.email.emailInput}
-                                keyboardType="email-address"
-                                textContentType="emailAddress"
-                            />
-                        </TextInputBox>
+                        <TextInputBoxComponent
+                            text='Email'
+                            boxFocus={form.email.onFocus}
+                            checkError={form.email.error}
+                            onBlur={() => boxBlur('email', true)}
+                            onFocus={() => boxFocus('email', true)}
+                            onChangeText={(text) => onChangeText('email', text)}
+                            value={form.email.emailInput}
+                            keyboardType="email-address"
+                            textContentType="emailAddress"
+                        />
                     </TextInputBoxWrapper>
 
                     <TextInputBoxWrapper>
-                        <TextInputBox boxFocus={form.password.onFocus}>
-                        <TextInputLabel checkError={form.password.error}>
-                            Password 
-                        </TextInputLabel>
-                            <InputText 
-                                onBlur={() => boxBlur('password', true)}
-                                onFocus={() => boxFocus('password', true)}
-                                onChangeText={(text) => onChangeText('password', text)}
-                                value={form.password.passwordInput}
-                                secureTextEntry={true}
-                            />
-                        </TextInputBox>
+                        <TextInputBoxComponent 
+                            text='Password'
+                            boxFocus={form.password.onFocus}
+                            checkError={form.password.error}
+                            onBlur={() => boxBlur('password', true)}
+                            onFocus={() => boxFocus('password', true)}
+                            onChangeText={(text) => onChangeText('password', text)}
+                            value={form.password.passwordInput}
+                            secureTextEntry={true}
+                        />
                     </TextInputBoxWrapper>
 
                     <LinkWrapper>
-                        <Link>Forgot Password</Link>
+                        <LinkComponent 
+                            text='Forgot Password'
+                            onPress={() => {console.log('forgot password')}}
+                        />
                     </LinkWrapper>
 
                     <ButtonWrapper>
-                        <ButtonClick inputColor='yellow'>
-                            <ButtonText onPress={checkEmailPassword}>Sign In</ButtonText>
-                        </ButtonClick>
+                        <ButtonComponent
+                            text='Sign In'
+                            inputColor='yellow'
+                            onPress={signIn}
+                        />
                     </ButtonWrapper>
 
                     <ButtonWrapper>
-                        <ButtonClick>
-                            <ButtonText onPress={() => navigation.navigate('Register')}>Register</ButtonText>
-                        </ButtonClick>
+                        <ButtonComponent
+                            text='Register'
+                            onPress={() => navigation.navigate('Register')}
+                        />
                     </ButtonWrapper>
                 </Content>
 
